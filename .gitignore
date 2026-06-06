@@ -1,0 +1,5 @@
+# Build artifact — regenerate with build.sh
+ClaudeBubble.app/
+# Runtime log (streams conversation-adjacent app events; never commit)
+bubble.log
+.DS_Store
