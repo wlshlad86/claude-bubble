@@ -11,13 +11,22 @@ Native Swift + SwiftUI, no Xcode project, tiny memory footprint.
 ## Features
 
 - **Floating bubble** — always-on-top, all Spaces, no Dock icon. Click to toggle.
-- **Global hotkey ⌃⌥⌘B** — summon/dismiss from any app (Carbon hotkey, no
-  accessibility permission needed).
+- **Global hotkey** — summon/dismiss from any app (Carbon hotkey, no accessibility
+  permission needed). Default ⌃⌥⌘B; **reassign it** from the in-app settings popover.
 - **Streaming answers** — `--output-format stream-json --include-partial-messages`;
   text appears token-by-token as Claude writes it.
+- **Markdown rendering** — answers render with bold/italic, headings, bullet lists,
+  inline code, and **fenced code blocks in a monospace box with a one-click copy**.
 - **Follow-up conversations** — first turn uses `--session-id <uuid>`, later turns
-  `--resume <uuid>`, so context carries across messages. The pencil icon starts a
-  new chat (fresh session).
+  `--resume <uuid>`, so context carries across messages.
+- **Persistent history** — the conversation is saved to disk and restored on the
+  next launch (Application Support/ClaudeBubble/conversation.json). The pencil icon
+  (⌘N) starts a fresh chat.
+- **Remembers its spot** — drag the bubble anywhere; it reopens where you left it.
+- **Stop button** — interrupt a running answer mid-stream; **Esc** collapses the panel.
+- **Real error messages** — if Claude Code isn't logged in or the CLI is missing,
+  the bubble says so instead of silently showing "(no response)". The CLI path is
+  auto-detected across common locations (override with `CLAUDE_PATH`).
 
 ## Requirements
 
@@ -46,10 +55,13 @@ Quit it: `pkill -f ClaudeBubble`
   `claude` reports "Not logged in".
 - `LSUIElement` is true, so no Dock icon / menu-bar clutter.
 
-## Status: v0.2
+## Status: v0.3
 
 Done: floating bubble, click-to-ask, **streaming answers**, **follow-up
-conversations**, **global hotkey ⌃⌥⌘B**, launch-at-login.
+conversations**, **global hotkey (configurable)**, **markdown + code-block rendering
+with copy**, **persistent history across restarts**, **drag-to-reposition memory**,
+stop-streaming, Esc-to-collapse, ⌘N new chat, friendly error surfacing, CLI
+auto-detection, thinking animation, launch-at-login.
 
 Launch-at-login is installed as a LaunchAgent:
 `~/Library/LaunchAgents/com.pensaer.claudebubble.plist` (RunAtLoad, KeepAlive off).
@@ -58,7 +70,7 @@ Launch-at-login is installed as a LaunchAgent:
 - After editing the plist: `bootout` then `launchctl bootstrap gui/$(id -u) <plist>`
 
 Next ideas (not built yet):
-- Refined idle/bounce + thinking animation.
-- Persist conversations across app restarts (currently in-memory only).
-- Drag-to-reposition that remembers its spot.
-- Configurable hotkey + markdown rendering of answers.
+- Multi-line input (Shift+Enter for newlines) via a custom NSTextView.
+- Syntax highlighting inside code blocks.
+- Resizable / detachable chat panel.
+- Model picker and a token/cost indicator.

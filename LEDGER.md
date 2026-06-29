@@ -1,0 +1,26 @@
+# LEDGER — decisions & corrections
+
+Append-only. Newest at top. One entry per durable lesson or decision.
+
+## 2026-06-29 — v0.3: usability + continuity pass
+- **Markdown is rendered by a hand-rolled splitter, not a library.** `AttributedString(markdown:)`
+  handles inline syntax only (`.inlineOnlyPreservingWhitespace`); block structure (code
+  fences, bullets, headings) is done by `MarkdownParser`/`ProseText`. Rationale: zero
+  dependencies, macOS 12-safe, and code blocks (the real pain point) get a dedicated
+  monospace+copy view. Good enough for chat; not a full CommonMark renderer.
+- **Conversations persist to JSON in Application Support**, not UserDefaults — messages can
+  be large. Session id is saved too, so `--resume` continues the *same* Claude session
+  after relaunch (subject to Claude Code's own session retention).
+- **Bubble position is anchored top-left and clamped on-screen.** Programmatic expand/collapse
+  is guarded (`isProgrammaticMove` + 0.4s window) so it can't be mistaken for a user drag,
+  which previously would have made the bubble drift upward near the bottom edge.
+- **Errors are surfaced, not swallowed.** stderr is captured and the exit status checked;
+  "Not logged in" and missing-CLI cases get plain-English guidance instead of "(no response)".
+- **Deferred multi-line input.** A custom NSTextView (Enter=send, Shift+Enter=newline) is the
+  right fix but adds the most compile risk; kept the working single-line `TextField` +
+  `@FocusState` for this pass. Tracked in README "Next ideas".
+
+## Standing constraints
+- **Swift only compiles on the Mac** — never assume a sandbox build verifies anything.
+- **Keep it one file.** The smallness is the product.
+- **Public repo — ask before pushing.**
