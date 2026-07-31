@@ -2,6 +2,13 @@
 
 Append-only. Newest at top. One entry per durable lesson or decision.
 
+## 2026-07-31 — release assets + download path
+- **GitHub Releases are the public product surface**, not only tags. v0.2–v0.4 live on
+  the Releases page; each cut should attach `ClaudeBubble-vX.Y-macos.zip` via
+  `gh release upload`. Ad-hoc signed → README must document right-click Open / Gatekeeper.
+- Downloaders need Claude Code logged in, not the Swift toolchain; split README
+  Requirements into Download vs Build from source.
+
 ## 2026-07-31 — v0.4: copy-out answers (usable text)
 - **Claude prose was not selectable.** `.textSelection(.enabled)` lived on your bubbles and
   code blocks only; `ProseText` headings/bullets/paragraphs had none, so normal answers

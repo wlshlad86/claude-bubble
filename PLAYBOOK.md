@@ -15,10 +15,23 @@
    - Quit and relaunch → the conversation is still there.
 
 ## Cut a release / bump version
-1. Update `CFBundleShortVersionString` in `build.sh`.
+1. Update `CFBundleShortVersionString` (and `CFBundleVersion`) in `build.sh`.
 2. Update the `## Status: vX.Y` section and feature list in `README.md`.
 3. Build + smoke test (above).
 4. Commit with a clear message. **Ask before pushing** to the public repo.
+5. Tag + GitHub Release (version ladder on the Releases page):
+   ```bash
+   git tag -a vX.Y -m "vX.Y — short title"
+   git push origin main vX.Y
+   gh release create vX.Y --title "vX.Y — short title" --latest --notes "..."
+   ```
+6. Attach the downloadable app zip (this is what strangers download):
+   ```bash
+   bash build.sh
+   COPYFILE_DISABLE=1 zip -r -y "ClaudeBubble-vX.Y-macos.zip" ClaudeBubble.app
+   gh release upload "vX.Y" "ClaudeBubble-vX.Y-macos.zip" --clobber
+   ```
+   Point people at https://github.com/wlshlad86/claude-bubble/releases/latest
 
 ## Change the default hotkey behaviour
 `HotkeyManager` owns it. `register()` (re)registers the Carbon hotkey; `beginRecording()`

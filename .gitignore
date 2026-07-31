@@ -1,5 +1,8 @@
 # Build artifact — regenerate with build.sh
 ClaudeBubble.app/
+# Release zips (upload to GitHub Releases; never commit)
+ClaudeBubble-v*-macos.zip
+*.zip
 # Runtime log (streams conversation-adjacent app events; never commit)
 bubble.log
 .DS_Store

@@ -29,21 +29,36 @@ Native Swift + SwiftUI, no Xcode project, tiny memory footprint.
   the bubble says so instead of silently showing "(no response)". The CLI path is
   auto-detected across common locations (override with `CLAUDE_PATH`).
 
-## Requirements
+## Download (easiest)
 
-- macOS 12+ with the Swift toolchain (Xcode Command Line Tools: `xcode-select --install`)
-- [Claude Code](https://claude.com/claude-code) installed and logged in — the app
-  expects the CLI at `~/.local/bin/claude` (see `CLAUDE_PATH` in `main.swift` to change)
+**[Download the latest release](https://github.com/wlshlad86/claude-bubble/releases/latest)**  
+→ grab `ClaudeBubble-v*-macos.zip` → unzip → open `ClaudeBubble.app`.
 
-## Build & run
+### Requirements (download)
+
+- macOS 12+
+- [Claude Code](https://claude.com/claude-code) installed and logged in  
+  (the bubble is a thin UI over the `claude` CLI — it does not ship Claude)
+
+### First open (Gatekeeper)
+
+The app is **ad-hoc signed** (not Developer ID / notarized yet). On first launch macOS
+may say it can't be opened. Fix:
+
+1. **Right-click** `ClaudeBubble.app` → **Open** → **Open**, or
+2. System Settings → Privacy & Security → **Open Anyway**
+
+Quit: `pkill -x ClaudeBubble` (or force-quit from Activity Monitor)
+
+## Build from source
+
+Needs the Swift toolchain (Xcode Command Line Tools: `xcode-select --install`).
 
 ```bash
 git clone https://github.com/wlshlad86/claude-bubble && cd claude-bubble
 bash build.sh          # compiles main.swift -> ClaudeBubble.app (ad-hoc signed)
 open ClaudeBubble.app  # launches the bubble (top-left of screen)
 ```
-
-Quit it: `pkill -f ClaudeBubble`
 
 ## How it works
 
