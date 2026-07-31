@@ -1,12 +1,17 @@
 # Claude Bubble
 
-A little always-on floating assistant bubble for macOS, **powered by Claude Code (Opus 4.8)**.
+**Floating Mac bubble for Claude Code — hotkey, stream answers, copy them out.**
 
-A bouncy bubble sits in the top-left corner of the screen, always on top, on every
-Space. Click it (or press **⌃⌥⌘B** from anywhere) to expand a chat box; messages
-stream in live, and follow-up questions keep the conversation going.
+[![Download latest](https://img.shields.io/github/v/release/wlshlad86/claude-bubble?label=download&style=for-the-badge)](https://github.com/wlshlad86/claude-bubble/releases/latest)
+[![macOS 12+](https://img.shields.io/badge/macOS-12%2B-black?style=for-the-badge)](https://github.com/wlshlad86/claude-bubble/releases/latest)
 
-Native Swift + SwiftUI, no Xcode project, tiny memory footprint.
+A bouncy always-on-top bubble for every Space. Press **⌃⌥⌘B** (rebindable) from any
+app, ask Claude Code, watch the answer stream in, then select + **⌘C** or one-click
+copy the full reply. Native Swift + SwiftUI, one file, ~127 KB download.
+
+**Needs [Claude Code](https://claude.com/claude-code) installed and logged in.** First
+open is ad-hoc signed: **right-click → Open**. Promo copy for X / HN / Reddit lives in
+[`PROMO.md`](PROMO.md).
 
 ## Features
 
