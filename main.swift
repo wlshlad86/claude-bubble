@@ -286,6 +286,12 @@ struct MarkdownText: View {
     }
 }
 
+/// Put plain text on the system clipboard (code blocks + whole-answer copy).
+func copyToClipboard(_ s: String) {
+    NSPasteboard.general.clearContents()
+    NSPasteboard.general.setString(s, forType: .string)
+}
+
 struct ProseText: View {
     let text: String
     var body: some View {
@@ -301,18 +307,18 @@ struct ProseText: View {
         if t.isEmpty {
             Color.clear.frame(height: 4)
         } else if t.hasPrefix("### ") {
-            Text(inline(String(t.dropFirst(4)))).font(.system(size: 12, weight: .semibold))
+            Text(inline(String(t.dropFirst(4)))).font(.system(size: 12, weight: .semibold)).textSelection(.enabled)
         } else if t.hasPrefix("## ") {
-            Text(inline(String(t.dropFirst(3)))).font(.system(size: 13, weight: .bold))
+            Text(inline(String(t.dropFirst(3)))).font(.system(size: 13, weight: .bold)).textSelection(.enabled)
         } else if t.hasPrefix("# ") {
-            Text(inline(String(t.dropFirst(2)))).font(.system(size: 14, weight: .bold))
+            Text(inline(String(t.dropFirst(2)))).font(.system(size: 14, weight: .bold)).textSelection(.enabled)
         } else if let body = bullet(t) {
             HStack(alignment: .top, spacing: 6) {
                 Text("•").font(.system(size: 12))
-                Text(inline(body)).font(.system(size: 12))
+                Text(inline(body)).font(.system(size: 12)).textSelection(.enabled)
             }
         } else {
-            Text(inline(raw)).font(.system(size: 12))
+            Text(inline(raw)).font(.system(size: 12)).textSelection(.enabled)
         }
     }
 
@@ -355,8 +361,7 @@ struct CodeBlock: View {
     }
 
     private func copy() {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(code, forType: .string)
+        copyToClipboard(code)
         copied = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { copied = false }
     }
@@ -366,6 +371,8 @@ struct CodeBlock: View {
 
 struct MessageRow: View {
     let msg: AppState.Message
+    @State private var copied = false
+
     var body: some View {
         HStack(spacing: 0) {
             if msg.role == .you { Spacer(minLength: 28) }
@@ -373,7 +380,19 @@ struct MessageRow: View {
                 if msg.role == .you {
                     Text(msg.text).font(.system(size: 12)).textSelection(.enabled)
                 } else {
-                    MarkdownText(text: msg.text.isEmpty ? "…" : msg.text)
+                    HStack(alignment: .top, spacing: 6) {
+                        MarkdownText(text: msg.text.isEmpty ? "…" : msg.text)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if !msg.text.isEmpty {
+                            Button(action: copyAnswer) {
+                                Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                                    .font(.system(size: 10))
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
+                            .help("Copy full answer")
+                        }
+                    }
                 }
             }
             .padding(.horizontal, 10).padding(.vertical, 7)
@@ -382,6 +401,12 @@ struct MessageRow: View {
                 in: RoundedRectangle(cornerRadius: 12))
             if msg.role == .claude { Spacer(minLength: 28) }
         }
+    }
+
+    private func copyAnswer() {
+        copyToClipboard(msg.text)
+        copied = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { copied = false }
     }
 }
 

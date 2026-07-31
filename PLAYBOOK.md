@@ -10,6 +10,7 @@
    - Hotkey (default ⌃⌥⌘B, or whatever's set) toggles the panel from another app.
    - Ask a question → tokens stream in; the thinking ring pulses while loading.
    - Ask for code → it renders in a monospace block; the copy button works.
+   - Ask for prose → highlight text and ⌘C; the whole-answer copy button copies the full reply.
    - Esc collapses; ⌘N clears; the Stop button interrupts a long answer.
    - Quit and relaunch → the conversation is still there.
 

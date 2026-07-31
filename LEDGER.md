@@ -2,6 +2,13 @@
 
 Append-only. Newest at top. One entry per durable lesson or decision.
 
+## 2026-07-31 — v0.4: copy-out answers (usable text)
+- **Claude prose was not selectable.** `.textSelection(.enabled)` lived on your bubbles and
+  code blocks only; `ProseText` headings/bullets/paragraphs had none, so normal answers
+  could not be highlighted or ⌘C'd. Fix: enable selection on every prose `Text`, plus a
+  per-message "Copy full answer" button that puts raw markdown (including fences) on the
+  pasteboard via shared `copyToClipboard`. Code-block one-click copy unchanged.
+
 ## 2026-06-29 — v0.3: usability + continuity pass
 - **Markdown is rendered by a hand-rolled splitter, not a library.** `AttributedString(markdown:)`
   handles inline syntax only (`.inlineOnlyPreservingWhitespace`); block structure (code

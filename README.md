@@ -17,6 +17,7 @@ Native Swift + SwiftUI, no Xcode project, tiny memory footprint.
   text appears token-by-token as Claude writes it.
 - **Markdown rendering** — answers render with bold/italic, headings, bullet lists,
   inline code, and **fenced code blocks in a monospace box with a one-click copy**.
+  Full answer text is **selectable** (⌘C) and each Claude reply has a **copy-full-answer** button.
 - **Follow-up conversations** — first turn uses `--session-id <uuid>`, later turns
   `--resume <uuid>`, so context carries across messages.
 - **Persistent history** — the conversation is saved to disk and restored on the
@@ -55,13 +56,16 @@ Quit it: `pkill -f ClaudeBubble`
   `claude` reports "Not logged in".
 - `LSUIElement` is true, so no Dock icon / menu-bar clutter.
 
-## Status: v0.3
+## Status: v0.4
 
 Done: floating bubble, click-to-ask, **streaming answers**, **follow-up
 conversations**, **global hotkey (configurable)**, **markdown + code-block rendering
-with copy**, **persistent history across restarts**, **drag-to-reposition memory**,
-stop-streaming, Esc-to-collapse, ⌘N new chat, friendly error surfacing, CLI
-auto-detection, thinking animation, launch-at-login.
+with copy**, **selectable prose + whole-answer copy**, **persistent history across
+restarts**, **drag-to-reposition memory**, stop-streaming, Esc-to-collapse, ⌘N new
+chat, friendly error surfacing, CLI auto-detection, thinking animation, launch-at-login.
+
+**v0.4** — Claude answers are fully selectable (⌘C) and each reply has a one-click
+copy-full-answer control (in addition to the existing code-block copy button).
 
 Launch-at-login is installed as a LaunchAgent:
 `~/Library/LaunchAgents/com.pensaer.claudebubble.plist` (RunAtLoad, KeepAlive off).
